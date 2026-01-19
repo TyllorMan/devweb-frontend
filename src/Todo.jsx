@@ -2,6 +2,16 @@ import { useState } from "react";
 import Tarefa from "./Tarefa";
 
 function Todo() {
+  const estiloTodo = {
+    display: 'flex',
+    flexFlow: 'row wrap',
+    alignItems: 'center',
+  }
+
+  const estiloTarefas = {
+
+  }
+
   const [nextId, setNextId] = useState(0);
 
   const [tarefas, setTarefas] = useState([])
@@ -75,25 +85,30 @@ function Todo() {
   return (
     <div>
       <p>A fazer</p>
-      {tarefas.map((tarefa) => (
-        <div key={tarefa.id}>
-            <Tarefa tarefa={{ id: tarefa.id, nome: tarefa.nome }} aoDeletar={() => removeTarefa(tarefa.id)} aoFazer={() => fazerTarefa(tarefa.id)} />
-        </div>    
-      ))}
+      <div style={estiloTodo}>
+        {tarefas.map((tarefa) => (
+          <div key={tarefa.id} style={estiloTarefas}>
+              <Tarefa tarefa={{ id: tarefa.id, nome: tarefa.nome }} aoDeletar={() => removeTarefa(tarefa.id)} aoFazer={() => fazerTarefa(tarefa.id)} />
+          </div>    
+        ))}
+      </div>
       <p>Fazendo</p>
-      {tarefasDoing.map((tarefaDoing) => (
-        <div key={tarefaDoing.id}>
-            <Tarefa tarefa={{ id: tarefaDoing.id, nome: tarefaDoing.nome }} aoDeletar={() => defazerTarefa(tarefaDoing.id)} aoFazer={() => tarefaFeita(tarefaDoing.id)} />
-        </div>
-      ))}
-
+       <div style={estiloTodo}>
+        {tarefasDoing.map((tarefaDoing) => (
+          <div key={tarefaDoing.id}>
+              <Tarefa tarefa={{ id: tarefaDoing.id, nome: tarefaDoing.nome }} aoDeletar={() => defazerTarefa(tarefaDoing.id)} aoFazer={() => tarefaFeita(tarefaDoing.id)} />
+          </div>
+        ))}
+      </div>  
        <p>Feito</p>
-      {tarefasDone.map((tarefaDone) => (
-        <div key={tarefaDone.id}>
-            <Tarefa tarefa={{ id: tarefaDone.id, nome: tarefaDone.nome }} aoDeletar={() => defazerTarefaFeita(tarefaDone.id)} aoFazer={() => console.log(`Fazendo tarefa com id: ${tarefaDone.id}`)} />
-        </div>    
-      ))}
-   
+
+      <div style={estiloTodo}>
+        {tarefasDone.map((tarefaDone) => (
+          <div key={tarefaDone.id}>
+              <Tarefa tarefa={{ id: tarefaDone.id, nome: tarefaDone.nome }} aoDeletar={() => defazerTarefaFeita(tarefaDone.id)} aoFazer={() => console.log(`Fazendo tarefa com id: ${tarefaDone.id}`)} />
+          </div>    
+        ))}
+     </div>
       <div>
         <input type="text" value={novaTarefa} onChange={(e) => setNovaTarefa(e.target.value)} />
         <button onClick={() => addTarefa(novaTarefa)}>Adicionar</button>
